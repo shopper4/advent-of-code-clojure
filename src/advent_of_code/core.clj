@@ -6,3 +6,10 @@
   []
   (let [elves (map (fn [x] (map #(Integer/parseInt %) x)) (remove #(= '("") %) (partition-by #(= "" %) (str/split-lines (slurp "input_day1.txt")))))]
     (first (sort > (map #(reduce + %) elves)))))
+
+(defn day1-2
+  "https://adventofcode.com/2022/day/1"
+  []
+  (let [elves (map (fn [x] (map #(Integer/parseInt %) x)) (remove #(= '("") %) (partition-by #(= "" %) (str/split-lines (slurp "input_day1.txt")))))
+        top-elves (take 3 (sort > (map #(reduce + %) elves)))]
+    (reduce + top-elves)))
