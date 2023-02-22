@@ -1,18 +1,25 @@
 (ns advent-of-code.day2
   (:require [clojure.string :as str]))
 
+(defn- read-input
+  []
+  (map #(str/split % #" ") (str/split-lines (slurp "input_day2.txt"))))
+
 (defn- match-result
   [player opponent]
-  (case [player opponent]
-    ["Rock" "Rock"] 3
-    ["Rock" "Paper"] 0
-    ["Rock" "Scissors"] 6
-    ["Paper" "Rock"] 6
-    ["Paper" "Paper"] 3
-    ["Paper" "Scissors"] 0
-    ["Scissors" "Rock"] 0
-    ["Scissors" "Paper"] 6
-    ["Scissors" "Scissors"] 3))
+  (let [win 6
+        draw 3
+        lose 0] 
+    (case [player opponent]
+      ["Rock" "Rock"] draw
+      ["Rock" "Paper"] lose
+      ["Rock" "Scissors"] win
+      ["Paper" "Rock"] win
+      ["Paper" "Paper"] draw
+      ["Paper" "Scissors"] lose
+      ["Scissors" "Rock"] lose
+      ["Scissors" "Paper"] win
+      ["Scissors" "Scissors"] draw)))
 
 (def player-choices {"X" {:name "Rock" :score 1}
                      "Y" {:name "Paper" :score 2}
@@ -32,7 +39,7 @@
 (defn part1
   "https://adventofcode.com/2022/day/2"
   []
-  (let [input (map #(str/split % #" ") (str/split-lines (slurp "input_day2.txt")))
+  (let [input (read-input)
         scores (map (fn [[opponent player]]
                       (calculate-score opponent player)) input)]
     (reduce + scores)))
@@ -59,7 +66,7 @@
 (defn part2
   "https://adventofcode.com/2022/day/2"
   []
-  (let [input (map #(str/split % #" ") (str/split-lines (slurp "input_day2.txt")))
+  (let [input (read-input)
         scores (map (fn [[opponent outcome]]
                       (calculate-score-2 opponent outcome)) input)]
     (reduce + scores)))
