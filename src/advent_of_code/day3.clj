@@ -4,7 +4,7 @@
 
 (defn- load-input
   [] 
-  (str/split (slurp "input_day3.txt") #"\n"))
+  (str/split-lines (slurp "input_day3.txt")))
 
 (defn- is-upper-case? 
   [c] 
