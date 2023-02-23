@@ -22,7 +22,22 @@
    (set (subs rucksack 0 (/ (.length rucksack) 2)))
    (set (subs rucksack (/ (.length rucksack) 2)))))
 
+(defn- find-badge
+  [rucksacks]
+  (apply set/intersection (map set rucksacks))
+  )
+
 (defn part1 
   "https://adventofcode.com/2022/day/3"
   []
   (reduce + (flatten (map (fn [x] (map priority (find-error-items x))) (load-input)))))
+
+(defn part2
+  "https://adventofcode.com/2022/day/3"
+  [] 
+  (->>
+   (load-input)
+   (partition 3)
+   (map (fn [x] (priority (first (find-badge x)))))
+   (reduce +)
+   ))
