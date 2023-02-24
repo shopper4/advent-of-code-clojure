@@ -37,6 +37,11 @@
   (let [items (take quantity from)]
     (apply conj to items)))
 
+(defn- move-part-2
+  [from to quantity]
+  (let [items (reverse (take quantity from))]
+    (apply conj to items)))
+
 (defn part1
   "https://adventofcode.com/2022/day/5"
   []
@@ -50,3 +55,16 @@
                     acc (assoc acc from-index from-stack)]
                 acc)) stacks moves)))
 
+
+(defn part2
+  "https://adventofcode.com/2022/day/5#part2"
+  []
+  (let [moves (map #(parse-move %) (load-input))]
+    (reduce (fn [acc [quantity from-index to-index]]
+              (let [from-stack (nth acc from-index)
+                    to-stack (nth acc to-index)
+                    to-stack (move-part-2 from-stack to-stack quantity)
+                    from-stack (drop quantity from-stack)
+                    acc (assoc acc to-index to-stack)
+                    acc (assoc acc from-index from-stack)]
+                acc)) stacks moves)))
