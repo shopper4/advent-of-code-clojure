@@ -28,4 +28,17 @@
         x (filter within-range? ranges)]
     (count x)))
 
+(defn- within-range-2?
+  [[[min1 max1] [min2 max2]]]
+  (or (and (<= min1 max2) (>= max1 min2))
+      (and (<= min2 max1) (>= max2 min1))))
+
+(defn part2
+  "https://adventofcode.com/2022/day/3"
+  []
+  (let [values (map #(str/split % #",") (load-input))
+        ranges (map #(map get-min-max %) values)
+        x (filter within-range-2? ranges)]
+    (count x)))
+
 
